@@ -2,10 +2,14 @@ package com.jhkim.sbp;
 
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -13,9 +17,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jhkim.sbp.databinding.ActivityMainBinding;
+import com.jhkim.sbp.model.User;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,20 +33,75 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
+    public FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public DatabaseReference myRef = database.getReference("message");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        /**
+         *
+         */
+        binding.dbWrtBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = "1";
+                String email = "2";
+                String userId = "kim";
+                User user = new User(name, email);
+
+                database.getReference().child("users").child(userId).setValue(user);
+            }
+        });
     }
 
+    /**
+     * DB에 데이터 넣기
+     *
+     * @param view
+     */
     public void showadss(View view) {
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
         myRef.setValue("Hello, World!");
+    }
+
+//    public void writeNewUser(String userId, String name, String email) {
+//        name = "1";
+//        email = "2";
+//        userId = "kim";
+//        User user = new User(name, email);
+//
+//        database.getReference().child("users").child(userId).setValue(user);
+//
+//    }
+
+    // Read from the database
+    /**
+     * DB에서 데이터 읽기
+     *
+     * @param view
+     */
+    public void readData(View view) {
+        myRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("데이터READ", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w("데이터READ", "Failed to read value.", error.toException());
+            }
+        });
     }
 
     @Override
@@ -66,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 }
