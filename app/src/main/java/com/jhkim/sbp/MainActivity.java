@@ -2,10 +2,6 @@ package com.jhkim.sbp;
 
 import android.os.Bundle;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference myRef = database.getReference("message");
 
+    ReadWriteHelpers rwHelpers = new ReadWriteHelpers();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,19 +41,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         /**
          *
          */
         binding.dbWrtBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = "1";
-                String email = "2";
-                String userId = "kim";
-                User user = new User(name, email);
-
-                database.getReference().child("users").child(userId).setValue(user);
+                String userName = "44";
+                String email = "44";
+                String userId = "lee";
+                String password = "pwd1";
+                // 사용자 추가
+                rwHelpers.writeNewUser(userName, userId, password, email);
             }
         });
     }
