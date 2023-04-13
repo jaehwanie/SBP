@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "50332743387",
+    "project_id": "signal-bidding-project",
+    "storage_bucket": "signal-bidding-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50332743387:android:a258ff80781f9c09637efe",
+        "android_client_info": {
+          "package_name": "com.jhkim.sbp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50332743387-omfpk8mtq5vblsg8l3bnhhk49jlf2g52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jhkim.sbp",
+            "certificate_hash": "0c336ea95a6a0c62e7756038bc0935dd0224ba02"
+          }
+        },
+        {
+          "client_id": "50332743387-f5rfkiqijtvagq920ger1fni4f9krh44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT403pGnB0lbxJrDep3CTlKgmHLU_Gm0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50332743387-f5rfkiqijtvagq920ger1fni4f9krh44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
